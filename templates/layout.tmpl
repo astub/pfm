@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Pioneer Flight Museum.">
+
+    <title>Pioneer Flight Museum &ndash; Home</title>
+    
+    <script src="/assets/jquery/jquery-latest.min.js"></script>
+    
+	<link rel="stylesheet" href="/assets/pure/pure-min.css">
+	<link rel="stylesheet" href="custom.css">
+	
+
+	
+</head>
+<body>
+
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="/assets/pure/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="/assets/pure/grids-responsive-min.css">
+<!--<![endif]-->
+
+<div class="pure-g header">
+	<div class="pure-u-1-2 pure-u-md-1-2">
+		<div class="pure-menu">
+			<a href="/" class="pure-menu-heading white">Pioneer Flight Museum</a>
+		</div>
+	</div>
+	
+	<div class="pure-u-1-2 pure-u-md-1-2">
+		<div class="pure-menu pure-menu-horizontal pure-menu-header">
+			<ul class="pure-menu-list">
+				<li class="">
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+					<input name="cmd" value="_s-xclick" type="hidden">
+					<input name="hosted_button_id" value="ZX2NWJC9BG77G" type="hidden">
+					<input class="pure-menu-link white" name="submit" alt="+Donate" type="image">
+					</form>
+				</li>
+			</ul>
+   		</div>
+	</div>
+</div>
+
+<!-- <li class="pure-menu-item"><a href="#" class="pure-menu-link white">+Give</a></li> -->
+
+{{template "content"}}
+
+</body>
+</html>

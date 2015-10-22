@@ -1,0 +1,137 @@
+{{define "content"}}
+
+<div class="content">
+	
+	<br />
+	
+	<h2 class="title">Museum Information</h2>
+	<div class="box rounded">
+		
+		<h2><strong>Operational Hours</strong></h2>
+		<ul style="padding-left:15px">
+			<li>Monday - Friday</li>
+			<li>9:00 AM - 2:00 PM</li>
+		</ul>
+		
+		<p>-----------------------------</p>
+		
+		<h2><strong>Volunteer Workdays</strong></h2>
+		<ul style="padding-left:15px">
+			<li>3rd Saturday of each month</li>
+		</ul>
+		
+	</div>
+	
+	<h2 class="title">Contant Information</h2>
+	<div class="box rounded">
+		
+		<h2 class="subTitle"><strong>Phone</strong></h2>
+		<ul style="padding-left:15px">
+			<li>830-639-4162</li>
+		</ul>
+		
+		<h2><strong>Email</strong></h2>
+		<ul style="padding-left:15px">
+			<li>info@pioneerflightmuseum.org</li>
+		</ul>
+		
+		<h2><strong>Address</strong></h2>
+		<ul style="padding-left:15px">
+			<li>190 Pershing Lane, Kingsbury, TX 78638</li>
+		</ul>
+		
+		
+		
+	</div>
+	
+	<div id="map"></div>
+	
+	<br />
+	
+	<h2 class="title">Pilot Information</h2>
+	<div class="box rounded">
+		
+		<h2 class="subTitle">Field Information</h2>
+		<ul style="padding-left:15px">
+			<li><strong>Old Kingsbury Aerodrome Airport</strong></li>
+			<li><strong>FAA identifier:</strong> 85TE</li>
+			<li><strong>Elevation:</strong> 560</li>
+			<li><strong>Location:</strong> N29° 38.038' W97° 48.685'</li>
+			<li><strong>Runway:</strong> 14/32 Grass</li>
+			<li><strong>Length:</strong> 2600 ft</li>
+		</ul>
+		
+		<br />
+		
+		<h2 class="subTitle">Warnings</h2>
+		<ul style="padding-left:15px">
+			<li><p>Towers on West side of field</p></li>
+			<li><p>Radio Controlled Model Aircraft Traffic</p></li>
+		</ul>
+		
+		<br />
+		
+		<h2 class="subTitle">Notes</h2>
+		<ul style="padding-left:15px">
+			<li><p>Aircraft in the vicinity of Old Kingsbury can use 122.9 as an advisory frequency. Note that Old Kingsbury Aerodrome has a great deal of NORDO traffic. </p></li>
+			<li><p>Due to the frequent presence of radio-controlled model aircraft, arriving aircraft should enter the pattern at 1000 feet AGL before descending to allow time for the R/C aircraft to land.</p></li>
+			<li><p>Old Kingsbury Aerodrome uses the FAA identifier of 85TE. It's located near Seguin, about 40 miles east of San Antonio. In the above view, the runway is on the left side of the image, aircraft parking at top center, and the main hangars are at the far end of the field. </p></li>
+		</ul>
+		
+		
+	</div>
+	
+	
+	
+</div>
+
+
+
+<style type="text/css">
+      #map { height: 20em; }
+</style>
+
+
+<script type="text/javascript">
+
+	var map;
+	function initMap() {
+		var myLatLng = {lat: 29.635297, lng: -97.811828};
+
+
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: myLatLng,
+			zoom: 10
+		});
+	
+	
+		var contentString = '<div id="content"> <h1>Pioneer Flight Museum</h1> </div>';
+	
+		var infowindow = new google.maps.InfoWindow({
+			content: contentString
+		});
+	
+		var marker = new google.maps.Marker({
+			position: myLatLng,
+			map: map,
+			title: 'Hello World!'
+		});
+
+		marker.addListener('click', function() {
+			infowindow.open(map, marker);
+		});
+	}
+
+</script>
+    
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCe0nP7shAV5llFp0QA19Fa0AYTFcJqFAM&callback=initMap">
+</script>
+
+
+
+<div>
+</div>
+
+
+{{end}}

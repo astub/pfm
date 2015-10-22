@@ -1,0 +1,173 @@
+{{define "content"}}
+
+<div class="content">
+		
+		<div class="e-box">
+			<h5 class="center">Post Editor</h5>
+			<div class="pure-g">
+			
+			<div class="pure-u-1 pure-u-md-5-8">
+				<form id="editor-form" class="pure-form e-form" method="post" action="/new_post">
+					<h5 class="pure-u-1">Main Info</h5>
+					
+    				<input type="text" id="e_title" name="title" class="pure-u-1" placeholder="title" required>
+					<input type="text" id="datepicker" name="datepicker" class="pure-u-1" placeholder="mm/dd/yyyy" required>
+					
+					<label for="event" class="pure-radio">
+						<input id="event" type="radio" name="type" value="ee" checked> Event
+					</label>
+					<label for="article" class="pure-radio">
+						<input id="article" type="radio" name="type" value="aa"> Article
+					</label>
+					<label for="aircraft" class="pure-radio">
+						<input id="aircraft" type="radio" name="type" value="pp"> Aircraft
+					</label>
+					<label for="vehicle" class="pure-radio">
+						<input id="vehicle" type="radio" name="type" value="vv"> Vehicle
+					</label>
+					<label for="project" class="pure-radio">
+						<input id="project" type="radio" name="type" value="pr"> Project
+					</label>
+					
+					<h5 class="pure-u-1">Details</h5>
+					<div class="zz">
+	   					<textarea id="e_details" name="details" class="pure-u-1" placeholder=""></textarea>
+   					</div> 
+   					
+   					<h5 class="pure-u-1">Specs</h5>
+					<div class="zz">
+	   					<textarea id="e_specs" name="specs" class="pure-u-1" placeholder="" readonly></textarea>
+   					</div>
+   					
+   					<h5 class="pure-u-1">Links</h5>
+					<div class="zz">
+	   					<textarea id="e_links" name="links" class="pure-u-1" placeholder=""></textarea>
+   					</div>  
+   					
+   					<h5 class="pure-u-1">Uploads</h5>
+   					<input name="file" id="file" type="text" class="pure-u-1" readonly>
+   					<button type="submit" class="pure-button pure-button-primary pure-u-1">Submit</button>
+   					
+				</form>
+				
+			</div>
+			
+			<div class="pure-u-1 pure-u-md-3-8">
+			
+				<form id="upload" method="post" action="/upload_img" enctype="multipart/form-data">
+					<input name="f_id" id="f_id" type="text" class="f_id" readonly>
+					<div id="drop">
+						Drop Here
+						<a>Browse</a>
+						<input type="file" name="upl" id="upl" multiple />
+					</div>
+					<ul>
+						<!-- The file uploads will be shown here -->
+					</ul>
+				</form>
+					
+				<div class="center">
+					<h5 class="pure-u-1">Currently Editing</h5>
+					
+					<select id="post-select">
+						<option class="green">A New Post</option>
+					</select>
+					
+					<form action="" method="post">
+						<button class="pure-button">Delete</button>
+					</form>
+					
+				</div>
+				
+			</div>
+			
+			</div>
+		
+		</div>
+		
+		
+		
+		
+		
+		<script type="text/javascript">
+			$(function(){
+			
+				$('input:radio').change(
+					function(){
+						if (this.value == 'pp' || this.value == 'vv') {
+							document.getElementById("e_specs").readOnly = false;
+						} else {
+							document.getElementById("e_specs").readOnly = true;
+						}
+					}
+				);
+				
+				$('#post-select').on('change', function (event) {
+					var id = $(this).children(":selected").attr("id");
+					var pst = getPostForEditor(id);
+					console.log(pst);
+					
+					$("#e_title").val(pst.title);
+					
+					var pdate = new Date(pst.date);
+					var dateString = pdate.format("mm/dd/yyyy");
+					$("#datepicker").val(dateString);
+					
+					var $radios = $('input:radio[name=type]');
+        			$radios.filter('[value='+pst.type+']').prop('checked', true);
+        			
+        			$("#e_details").val(pst.n_detail);
+					$("#e_specs").val(pst.n_specs);
+					$("#e_links").val(pst.n_links);
+					
+					$("#file").val(pst.file);
+					$("#f_id").val(pst.file);
+					
+					$("#editor-form").attr("action", "/update_post");
+					
+				});
+				
+			});
+		</script>
+		
+		<script type="text/javascript">
+			var d = new Date();
+			var n = d.getTime(); 
+			
+			var elem  = document.getElementById("file");
+			var elem1 = document.getElementById("f_id");
+			elem.value = n;
+			elem1.value = n;
+		</script>
+		
+		<!-- JavaScript Includes -->
+		<script src="assets/f_up/js/jquery.knob.js"></script>
+
+		<!-- jQuery File Upload Dependencies -->
+		<script src="assets/f_up/js/jquery.ui.widget.js"></script>
+		<script src="assets/f_up/js/jquery.iframe-transport.js"></script>
+		<script src="assets/f_up/js/jquery.fileupload.js"></script>
+		
+		<!-- Our main JS file -->
+		<script src="assets/f_up/js/script.js"></script>
+		
+		<!-- The main CSS file -->
+		<link href="assets/f_up/css/style.css" rel="stylesheet" />
+		
+		
+		<!-- DatePicker -->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script>
+			$(function() {
+				$( "#datepicker" ).datepicker();
+			});
+		</script>
+
+		<!-- Our Code -->
+		<script type="text/javascript" src="/date.js"></script>
+		<script type="text/javascript" src="/posts.js"></script>
+
+</div>
+
+{{end}}
