@@ -78,6 +78,7 @@ body{
 	background-color: white;
 	margin: 20px 0px 20px 0px;
 	box-shadow: 0em 0em .2em #aaa;
+	line-height: 150%;
 }
 
 .li-select {
@@ -181,6 +182,8 @@ body{
 	background-color: white;
 	margin: 5px 5px 20px 0px;
 	padding: 5px 5px 5px 5px;
+	
+	line-height: 150%;
 }
 
 .max {

@@ -98,7 +98,7 @@ func ExhibitsPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func MediaPage(w http.ResponseWriter, r *http.Request) {
-	render(w, "templates/aircraft.tmpl", nil)
+	render(w, "templates/media.tmpl", nil)
 }
 
 func (fe FrontEnd) ShowPost(w http.ResponseWriter, r *http.Request) {
