@@ -68,11 +68,15 @@ type FrontEnd struct {
 }
 
 func render(w http.ResponseWriter, filename string, data interface{}) {
-	tmpl, err := template.ParseFiles("templates/layout.tmpl", filename)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	var err error
+	tmpl := template.New("")
+
+	if tmpl, err = template.ParseFiles("templates/layout.tmpl", filename); err != nil {
+		fmt.Println(err);
+		return
 	}
-	if err := tmpl.Execute(w, data); err != nil {
+
+	if err = tmpl.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
@@ -101,6 +105,10 @@ func MediaPage(w http.ResponseWriter, r *http.Request) {
 	render(w, "templates/media.tmpl", nil)
 }
 
+type Page struct {
+	PageData interface{}
+}
+
 func (fe FrontEnd) ShowPost(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -110,13 +118,18 @@ func (fe FrontEnd) ShowPost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	page := &Page{PageData: pst}
+	render(w, "templates/postview.tmpl", page)
 
+
+/*
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(pst); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+*/
 }
 
 func (fe FrontEnd) GetPosts(w http.ResponseWriter, r *http.Request) {
