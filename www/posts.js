@@ -211,9 +211,16 @@ function appendPhotos(pst,div) { //General Function
 	var stackid = "imgstack"+div;
 	$('#'+div).append('<div id="'+stackid+'" class="pure-g">');
 	
-	for (var img in imgs) {
-		var image = imgs[img];
-		$('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1-2 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
+	if (imgs.length > 2) { 
+		for (var img in imgs) {
+			var image = imgs[img];
+			$('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1-2 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
+		}
+	} else {
+		for (var img in imgs) {
+			var image = imgs[img];
+			$('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
+		}
 	}
 	
 	$('#'+div).append('</div>');
