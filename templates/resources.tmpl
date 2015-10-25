@@ -110,6 +110,7 @@
 					$("#e_title").val(pst.title);
 					
 					var pdate = new Date(pst.date);
+					pdate.setDate(pdate.getDate() + 1); //Fix timeZ
 					var dateString = pdate.format("mm/dd/yyyy");
 					$("#datepicker").val(dateString);
 					

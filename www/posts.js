@@ -110,6 +110,7 @@ function setPost(i,x) { //x = section HOMEPAGE
 	if (title == null) return; //function not for this page
 	
 	var today = new Date(post.date);
+	today.setDate(today.getDate() + 1); //Fix due to time zone issue
 	var dateString = today.format("mmmm d, yyyy");
 
 	title.innerHTML = post.title;
@@ -133,6 +134,7 @@ function setCalendar() { // EVENTSNEWS
 		var post = events[pst];
 		
 		var date = new Date(post.date);
+		date.setDate(date.getDate() + 1); //Fix timeZ
 		var dateString = date.format("mmmm d");
 		var yearString = date.format("yyyy");
 		
@@ -153,6 +155,7 @@ function setArticles() { // EVENTSNEWS
 		var post = news[pst];
 		
 		var date = new Date(post.date);
+		date.setDate(date.getDate() + 1); //Fix timeZ
 		var dateString = date.format("mmmm d, yyyy");
 		
 		//$('#p-list').append('<div id="'+post.file+'" class="box rounded"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <br /> <h4 class="subTitle">Details:</h4> <p>'+post.detail+'</p></div>');
