@@ -214,7 +214,7 @@ function appendPhotos(pst,div) { //General Function
 	var stackid = "imgstack"+div;
 	$('#'+div).append('<div id="'+stackid+'" class="pure-g">');
 	
-	if (imgs.length > 2) { 
+	if (imgs.length > 3) { 
 		for (var img in imgs) {
 			var image = imgs[img];
 			$('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1-2 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
