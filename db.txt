@@ -1,0 +1,1 @@
+CREATE TABLE posts (type VARCHAR(5) NOT NULL, date DATETIME NOT NULL, title VARCHAR(40) NOT NULL, detail TEXT, spec TEXT, urllink TEXT, f_id VARCHAR(30), PRIMARY KEY (f_id)) ENGINE=InnoDB;
