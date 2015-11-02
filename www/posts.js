@@ -160,7 +160,7 @@ function setArticles() { // EVENTSNEWS
 		
 		//$('#p-list').append('<div id="'+post.file+'" class="box rounded"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <br /> <h4 class="subTitle">Details:</h4> <p>'+post.detail+'</p></div>');
 		$('#p-list').append('<div id="" class="box rounded pure-g"><div class="pure-u-1 pure-u-md-1-2"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <br /> <h4 class="subTitle">Detail</h4> <p>'+post.detail+'</p> <br /> <h4 class="subTitle">Notes</h4> </div> <div id="'+post.file+'" class="pure-u-1 pure-u-md-1-2"> <h4 class="subTitle">Photos</h4> </div> </div>');
-		appendPhotos(post,post.file)
+		appendPhotos(post,post.file,post.imgs.length)
 	}
 }
 
@@ -174,59 +174,44 @@ function setExhibits(exhibit) { // Exhibits
 	
 	$('#'+exhibit).addClass("pure-menu-selected");
 	
+	var data;
 	if (exhibit == 'pp') {
-		for (var pst in aircraft) {
-			var post = aircraft[pst];
-		
-			var date = new Date(post.date);
-			var dateString = date.format("mmmm d, yyyy");
-			
-			var s = post.detail;
-			s = s.slice(0, 380);
-		
-			$('#exhibits').append('<div class="pure-u-1 pure-u-sm-1-2"> <div id="" class="box rounded pure-g"><div class="pure-u-1 pure-u-md-1-2"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <br /> <h4 class="subTitle">Detail</h4> <p>'+s+"..."+'</p> <a href="">Read More</a> </div> <div id="'+post.file+'" class="pure-u-1 pure-u-md-1-2"> <h4 class="subTitle">Photos</h4> </div> </div> </div>');
-			appendPhotos(post,post.file)
-		}
+		data = aircraft;
 	} else if (exhibit == 'vv') {
-		for (var pst in vehicles) {
-			var post = vehicles[pst];
-		
-			var date = new Date(post.date);
-			var dateString = date.format("mmmm d, yyyy");
-		
-			$('#exhibits').append('<div id="" class="box rounded pure-g"><div class="pure-u-1 pure-u-md-1-2"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <br /> <h4 class="subTitle">Detail</h4> <p>'+post.detail+'</p> <br /> <h4 class="subTitle">Specs</h4> <p>'+post.specs+'</p> <br /> <h4 class="subTitle">Articles</h4> </div> <div id="'+post.file+'" class="pure-u-1 pure-u-md-1-2"> <h4 class="subTitle">Photos</h4> </div> </div>');
-			appendPhotos(post,post.file)
-		}
+		data = vehicles;
 	} else if (exhibit == 'pr') {
-		for (var pst in projects) {
-			var post = projects[pst];
-		
-			var date = new Date(post.date);
-			var dateString = date.format("mmmm d, yyyy");
-		
-			$('#exhibits').append('<div id="" class="box rounded pure-g"><div class="pure-u-1 pure-u-md-1-2"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <br /> <h4 class="subTitle">Detail</h4> <p>'+post.detail+'</p> <br /> <h4 class="subTitle">Specs</h4> <p>'+post.specs+'</p> <br /> <h4 class="subTitle">Articles</h4> </div> <div id="'+post.file+'" class="pure-u-1 pure-u-md-1-2"> <h4 class="subTitle">Photos</h4> </div> </div>');
-			appendPhotos(post,post.file)
-		}
+		data = projects;
 	}
+	
+	for (var pst in data) {
+		var post = data[pst];
+	
+		var date = new Date(post.date);
+		var dateString = date.format("mmmm d, yyyy");
+		
+		var s = post.detail;
+		s = s.slice(0, 380);
+	
+		$('#exhibits').append('<div class="pure-u-1 pure-u-sm-1-2"> <div id="" class="box rounded pure-g"><div class="pure-u-1 pure-u-md-1 pure-u-lg-3-5"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <h4 class="subTitle">Detail</h4> <p>'+s+"..."+'</p> <a class="subTitle" href="/post/'+post.file+'">Read More...</a> </div> <div id="'+post.file+'" class="pure-u-1 pure-u-md-1 pure-u-lg-2-5"> <h4 class="subTitle">Photos</h4> </div> </div> </div>');
+		appendPhotos(post,post.file,1)
+	}
+	 
 }
 
 
-function appendPhotos(pst,div) { //General Function
-
+function appendPhotos(pst,div,count) { //General Function
+	
+	var i = 0;
 	var imgs = pst.imgs;
 	var stackid = "imgstack"+div;
+	
 	$('#'+div).append('<div id="'+stackid+'" class="pure-g">');
 	
-	if (imgs.length > 3) { 
-		for (var img in imgs) {
-			var image = imgs[img];
-			$('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1-2 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
-		}
-	} else {
-		for (var img in imgs) {
-			var image = imgs[img];
-			$('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
-		}
+	while (i < imgs.length && i < count) {
+		var image = imgs[i];
+		if (count > 3) $('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1-2 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
+		else $('#'+stackid).append('<div class="pure-u-1 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
+		i++
 	}
 	
 	$('#'+div).append('</div>');

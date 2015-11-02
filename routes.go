@@ -68,6 +68,11 @@ type FrontEnd struct {
 	CookieHandler *securecookie.SecureCookie
 }
 
+type Page struct {
+	PageData interface{}
+	Title string
+}
+
 func render(w http.ResponseWriter, filename string, data interface{}) {
 	var err error
 	tmpl := template.New("")
@@ -83,31 +88,33 @@ func render(w http.ResponseWriter, filename string, data interface{}) {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	render(w, "templates/home.tmpl", nil)
+	page := &Page{Title: "Home"}
+	render(w, "templates/home.tmpl", page)
 }
 
 func Resources(w http.ResponseWriter, r *http.Request) {
-	render(w, "templates/resources.tmpl", nil)
+	page := &Page{Title: "Resources"}
+	render(w, "templates/resources.tmpl", page)
 }
 
 func EventNewsPage(w http.ResponseWriter, r *http.Request) {
-	render(w, "templates/eventnews.tmpl", nil)
+	page := &Page{Title: "News"}
+	render(w, "templates/eventnews.tmpl", page)
 }
 
 func InfoPage(w http.ResponseWriter, r *http.Request) {
-	render(w, "templates/info.tmpl", nil)
+	page := &Page{Title: "Info"}
+	render(w, "templates/info.tmpl", page)
 }
 
 func ExhibitsPage(w http.ResponseWriter, r *http.Request) {
-	render(w, "templates/exhibits.tmpl", nil)
+	page := &Page{Title: "Exhibits"}
+	render(w, "templates/exhibits.tmpl", page)
 }
 
 func MediaPage(w http.ResponseWriter, r *http.Request) {
-	render(w, "templates/media.tmpl", nil)
-}
-
-type Page struct {
-	PageData interface{}
+	page := &Page{Title: "Media"}
+	render(w, "templates/media.tmpl", page)
 }
 
 func (fe FrontEnd) ShowPost(w http.ResponseWriter, r *http.Request) {
@@ -127,7 +134,7 @@ func (fe FrontEnd) ShowPost(w http.ResponseWriter, r *http.Request) {
 	pst.SpecsHTML = template.HTML(pst.Specs)
 	pst.LinksHTML = template.HTML(pst.Links)
 
-	page := &Page{PageData: pst}
+	page := &Page{PageData: pst, Title: pst.Title}
 	render(w, "templates/postview.tmpl", page)
 
 }
