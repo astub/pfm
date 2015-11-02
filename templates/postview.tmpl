@@ -2,7 +2,7 @@
 
 <div class="content">
 	<br />
-	<h4 class="title">Post... coming soon.</h4>
+	<h4 class="title">{{.Title}}</h4>
 	
 	
 		
@@ -13,16 +13,34 @@
 			<p>{{.Date}}</p> 
 			<br /> 
 			<h4 class="subTitle">Detail</h4> 
-			<p>{{.Details}}</p> 
+			<p>{{.DetailsHTML}}</p> 
 			<br /> 
+			
+			{{if .Specs}}
 			<h4 class="subTitle">Specs</h4> 
-			<p>{{.Specs}}</p> 
-			<br /> 
-			<h4 class="subTitle">Articles</h4> 
+			<p>{{.SpecsHTML}}</p> 
+			<br />
+			{{ end }}
+
+			{{if .Links}}
+			<h4 class="subTitle">Articles</h4>
+			<p>{{.LinksHTML}}</p>
+			<br />
+			{{ end }}
+ 
 		</div> 
 	
-		<div id="'+post.file+'" class="pure-u-1 pure-u-md-1-2"> 
-			<h4 class="subTitle">Photos</h4> 
+		<div id="{{.File}}" class="pure-u-1 pure-u-md-1-2"> 
+			<h4 class="subTitle">Photos</h4>
+			
+			<div class="pure-g">
+			{{range $img := .Images}}
+			<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1-2 l-img"> 
+				<img class="pure-img center" src="{{$img.Path}}"> 
+			</div>
+			{{end}}
+			</div>
+
 		</div> 
 	
 	</div>

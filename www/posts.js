@@ -180,8 +180,11 @@ function setExhibits(exhibit) { // Exhibits
 		
 			var date = new Date(post.date);
 			var dateString = date.format("mmmm d, yyyy");
+			
+			var s = post.detail;
+			s = s.slice(0, 380);
 		
-			$('#exhibits').append('<div id="" class="box rounded pure-g"><div class="pure-u-1 pure-u-md-1-2"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <br /> <h4 class="subTitle">Detail</h4> <p>'+post.detail+'</p> <br /> <h4 class="subTitle">Specs</h4> <p>'+post.specs+'</p> <br /> <h4 class="subTitle">Articles</h4> </div> <div id="'+post.file+'" class="pure-u-1 pure-u-md-1-2"> <h4 class="subTitle">Photos</h4> </div> </div>');
+			$('#exhibits').append('<div class="pure-u-1 pure-u-sm-1-2"> <div id="" class="box rounded pure-g"><div class="pure-u-1 pure-u-md-1-2"><a class="subTitle" href="/post/'+post.file+'">'+post.title+'</a> <p>'+dateString+'</p> <br /> <h4 class="subTitle">Detail</h4> <p>'+s+"..."+'</p> <a href="">Read More</a> </div> <div id="'+post.file+'" class="pure-u-1 pure-u-md-1-2"> <h4 class="subTitle">Photos</h4> </div> </div> </div>');
 			appendPhotos(post,post.file)
 		}
 	} else if (exhibit == 'vv') {

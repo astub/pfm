@@ -4,6 +4,7 @@ import (
 	"os"
 	//"fmt"
 	"database/sql"
+	"html/template"
 	"image"
 	"io/ioutil"
 	"log"
@@ -38,14 +39,18 @@ type Post struct {
 	Links   string    `json:"links"`
 	File    string    `json:"file"`
 	Images  []Image   `json:"imgs"`
+
+	DetailsHTML template.HTML
+	SpecsHTML   template.HTML
+	LinksHTML   template.HTML
 }
 
 type Posts []Post
 
 func (d DB) GetPost(id string) (pst Post, err error) {
-	var query = "SELECT type, date, title, detail, f_id FROM posts WHERE f_id=?;"
+	var query = "SELECT type, date, title, detail, spec, urllink, f_id FROM posts WHERE f_id=?;"
 	var t string
-	err = d.QueryRow(query, id).Scan(&pst.Type, &t, &pst.Title, &pst.Details, &pst.File)
+	err = d.QueryRow(query, id).Scan(&pst.Type, &t, &pst.Title, &pst.Details, &pst.Specs, &pst.Links, &pst.File)
 	pst.Date, _ = time.Parse("2006-01-02 15:04:05", t)
 	if err != nil {
 		return

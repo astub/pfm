@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -72,7 +73,7 @@ func render(w http.ResponseWriter, filename string, data interface{}) {
 	tmpl := template.New("")
 
 	if tmpl, err = template.ParseFiles("templates/layout.tmpl", filename); err != nil {
-		fmt.Println(err);
+		fmt.Println(err)
 		return
 	}
 
@@ -118,18 +119,17 @@ func (fe FrontEnd) ShowPost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	pst.Details = strings.Replace(pst.Details, "\r\n", "<br />", -1)
+	pst.Specs = strings.Replace(pst.Specs, "\r\n", "<br />", -1)
+	pst.Links = strings.Replace(pst.Links, "\r\n", "<br />", -1)
+	pst.DetailsHTML = template.HTML(pst.Details)
+	pst.SpecsHTML = template.HTML(pst.Specs)
+	pst.LinksHTML = template.HTML(pst.Links)
+
 	page := &Page{PageData: pst}
 	render(w, "templates/postview.tmpl", page)
 
-
-/*
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(pst); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-*/
 }
 
 func (fe FrontEnd) GetPosts(w http.ResponseWriter, r *http.Request) {
