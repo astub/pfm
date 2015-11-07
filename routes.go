@@ -70,7 +70,7 @@ type FrontEnd struct {
 
 type Page struct {
 	PageData interface{}
-	Title string
+	Title    string
 }
 
 func render(w http.ResponseWriter, filename string, data interface{}) {
@@ -183,7 +183,8 @@ func (fe FrontEnd) UpdatePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	} else {
-		fmt.Fprintf(w, "Post Updated!")
+		//fmt.Fprintf(w, "Post Updated!")
+		http.Redirect(w, r, "/", 301)
 	}
 
 }
@@ -218,7 +219,8 @@ func (fe FrontEnd) NewPost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	} else {
-		fmt.Fprintf(w, "Post added!")
+		//fmt.Fprintf(w, "Post added!")
+		http.Redirect(w, r, "/", 301)
 	}
 
 }

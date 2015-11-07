@@ -56,6 +56,7 @@ $(document).ready(function () {
 			
 			var title = post.title;
 			var eday = new Date(post.date);
+			eday.setDate(eday.getDate() + 1); //Fix due to time zone issue
 			if (today < eday) {
 				$("#e-list").append('<li id="'+pst+'-0"><a href="javascript:setPost('+pst+',0)" class="pure-menu-link black left">'+title+'</a></li>');
 			} else {
