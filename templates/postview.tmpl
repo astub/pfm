@@ -12,16 +12,17 @@
 			<h4 class="subTitle">{{.Title}}</h4> 
 			<p>{{.Date}}</p> 
 			<br /> 
-			<h4 class="subTitle">Detail</h4> 
-			<p>{{.DetailsHTML}}</p> 
-			<br /> 
-			
+
 			{{if .Specs}}
 			<h4 class="subTitle">Specs</h4> 
 			<p>{{.SpecsHTML}}</p> 
 			<br />
-			{{ end }}
 
+			{{ end }}
+			<h4 class="subTitle">Detail</h4> 
+			<p>{{.DetailsHTML}}</p> 
+			<br /> 
+			
 			{{if .Links}}
 			<h4 class="subTitle">Articles</h4>
 			<p>{{.LinksHTML}}</p>
