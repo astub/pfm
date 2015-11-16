@@ -70,7 +70,7 @@
 					<h5 class="pure-u-1">Currently Editing</h5>
 					
 					<select id="post-select">
-						<option class="green">A New Post</option>
+						<option id="clear" class="green">A New Post</option>
 					</select>
 					
 					<form action="" method="post">
@@ -94,7 +94,7 @@
 			
 				$('input:radio').change(
 					function(){
-						if (this.value == 'pp' || this.value == 'vv') {
+						if (this.value == 'pp' || this.value == 'vv' || this.value == 'pr') {
 							document.getElementById("e_specs").readOnly = false;
 						} else {
 							document.getElementById("e_specs").readOnly = true;
@@ -104,6 +104,13 @@
 				
 				$('#post-select').on('change', function (event) {
 					var id = $(this).children(":selected").attr("id");
+					
+					if (id == 'clear') {
+						window.location.reload();
+						clearFields();
+						return;
+					}
+					
 					var pst = getPostForEditor(id);
 					console.log(pst);
 					
@@ -116,6 +123,7 @@
 					
 					var $radios = $('input:radio[name=type]');
         			$radios.filter('[value='+pst.type+']').prop('checked', true);
+        			$radios.trigger('change');
         			
         			$("#e_details").val(pst.n_detail);
 					$("#e_specs").val(pst.n_specs);
@@ -127,6 +135,18 @@
 					$("#editor-form").attr("action", "/update_post");
 					
 				});
+				
+				function clearFields() {
+					$("#e_title").val("");
+					$("#datepicker").val("");
+					
+        			$("#e_details").val("");
+					$("#e_specs").val("");
+					$("#e_links").val("");
+					
+					$("#file").val("");
+					$("#f_id").val("");
+				}
 				
 			});
 		</script>
