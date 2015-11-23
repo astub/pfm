@@ -210,8 +210,10 @@ function appendPhotos(pst,div,count) { //General Function
 	
 	while (i < imgs.length && i < count) {
 		var image = imgs[i];
-		if (count > 3) $('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1-2 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
-		else $('#'+stackid).append('<div class="pure-u-1 l-img"> <img class="pure-img center" src="'+image.path+'"> </div>');
+		if (count > 3) 
+			$('#'+stackid).append('<div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1 pure-u-lg-1-2 l-img"> <img class="pure-img center max" src="'+image.path+'"> </div>');
+		else 
+			$('#'+stackid).append('<div class="pure-u-1 l-img"> <img class="pure-img center max" src="'+image.path+'"> </div>');
 		i++
 	}
 	

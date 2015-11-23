@@ -28,6 +28,7 @@ func NewRouter(db DataHandler) *mux.Router {
 
 	fe := FrontEnd{DataHandler: db}
 	fe.CookieHandler = securecookie.New(securecookie.GenerateRandomKey(64), securecookie.GenerateRandomKey(32))
+	fe.CacheOld = true
 
 	var routes = Routes{
 		Route{"Index", "GET", "/", Index},
@@ -66,6 +67,8 @@ type DataHandler interface {
 type FrontEnd struct {
 	DataHandler
 	CookieHandler *securecookie.SecureCookie
+	PostsCache    Posts
+	CacheOld      bool
 }
 
 type Page struct {
@@ -140,7 +143,13 @@ func (fe FrontEnd) ShowPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func (fe FrontEnd) GetPosts(w http.ResponseWriter, r *http.Request) {
-	psts, err := fe.DataHandler.GetPosts()
+	var err error
+
+	if fe.CacheOld {
+		fe.PostsCache, err = fe.DataHandler.GetPosts()
+		fe.CacheOld = false
+	}
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -148,12 +157,14 @@ func (fe FrontEnd) GetPosts(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(psts); err != nil {
+	if err := json.NewEncoder(w).Encode(fe.PostsCache); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
 func (fe FrontEnd) UpdatePost(w http.ResponseWriter, r *http.Request) {
+	fe.CacheOld = true
+
 	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -190,6 +201,8 @@ func (fe FrontEnd) UpdatePost(w http.ResponseWriter, r *http.Request) {
 }
 
 func (fe FrontEnd) NewPost(w http.ResponseWriter, r *http.Request) {
+	fe.CacheOld = true
+
 	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
