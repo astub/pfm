@@ -206,6 +206,8 @@ function appendPhotos(pst,div,count) { //General Function
 	var imgs = pst.imgs;
 	var stackid = "imgstack"+div;
 	
+	if(!imgs) return;
+	
 	$('#'+div).append('<div id="'+stackid+'" class="pure-g">');
 	
 	while (i < imgs.length && i < count) {
