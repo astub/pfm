@@ -44,6 +44,7 @@ func NewRouter(db DataHandler) *mux.Router {
 		Route{"ImgUpload", "POST", "/upload_img", ImgUpload},
 		Route{"AddPost", "POST", "/new_post", fe.NewPost},
 		Route{"UpdatePost", "POST", "/update_post", fe.UpdatePost},
+		Route{"DeletePost", "POST", "/delete_postqq/{id}", fe.DeletePost},
 	}
 
 	router := mux.NewRouter().StrictSlash(true)
@@ -59,6 +60,7 @@ func NewRouter(db DataHandler) *mux.Router {
 
 type DataHandler interface {
 	UpdatePost(pst Post) (err error)
+	DeletePost(id string) (err error)
 	InsertPost(pst Post) (err error)
 	GetPosts() (psts Posts, err error)
 	GetPost(string) (Post, error)
@@ -162,6 +164,17 @@ func (fe FrontEnd) GetPosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (fe FrontEnd) DeletePost(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	err := fe.DataHandler.DeletePost(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
 func (fe FrontEnd) UpdatePost(w http.ResponseWriter, r *http.Request) {
 	fe.CacheOld = true
 

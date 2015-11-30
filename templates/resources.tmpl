@@ -73,9 +73,7 @@
 						<option id="clear" class="green">A New Post</option>
 					</select>
 					
-					<form action="" method="post">
-						<button class="pure-button">Delete</button>
-					</form>
+					<button id="btn_d" class="pure-button" >Delete</button>
 					
 				</div>
 				
@@ -84,9 +82,6 @@
 			</div>
 		
 		</div>
-		
-		
-		
 		
 		
 		<script type="text/javascript">
@@ -147,6 +142,21 @@
 					$("#file").val("");
 					$("#f_id").val("");
 				}
+				
+				$('#btn_d').click(function() {
+					var file_id = document.getElementById("file").value;
+					console.log(file_id)
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if (xhttp.readyState == 4 && xhttp.status == 200) {
+							window.location.reload();
+							clearFields();
+							return;
+						}
+					};
+					xhttp.open("POST", "/delete_postqq/"+file_id, true);
+					xhttp.send(null);
+				});
 				
 			});
 		</script>

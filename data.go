@@ -72,6 +72,32 @@ func (d DB) GetPost(id string) (pst Post, err error) {
 	return
 }
 
+func (d DB) DeletePost(id string) (err error) {
+	tx, err := d.Begin()
+	if err != nil {
+		return
+	}
+
+	var query = "DELETE FROM posts WHERE f_id=?;"
+
+	stmt, err := tx.Prepare(query)
+	if err != nil {
+		return
+	}
+
+	defer func() {
+		if err == nil {
+			tx.Commit()
+		} else {
+			tx.Rollback()
+		}
+		stmt.Close()
+	}()
+
+	_, err = stmt.Exec(id)
+	return
+}
+
 func (d DB) UpdatePost(pst Post) (err error) {
 	tx, err := d.Begin()
 	if err != nil {
