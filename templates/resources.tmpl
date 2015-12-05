@@ -61,7 +61,7 @@
 						<a>Browse</a>
 						<input type="file" name="upl" id="upl" multiple />
 					</div>
-					<ul>
+					<ul id="fileslist">
 						<!-- The file uploads will be shown here -->
 					</ul>
 				</form>
@@ -101,8 +101,9 @@
 					var id = $(this).children(":selected").attr("id");
 					
 					if (id == 'clear') {
-						window.location.reload();
+						$("#editor-form").attr("action", "/new_post");
 						clearFields();
+						window.location.reload();
 						return;
 					}
 					
@@ -129,6 +130,21 @@
 					
 					$("#editor-form").attr("action", "/update_post");
 					
+					
+					
+					$('#fileslist').empty();		
+					for (var i in pst.imgs) {
+						var img = pst.imgs[i];
+						
+						var lis = '<li class="">';
+						lis = lis + ' <div style="display:inline;width:48px;height:48px;">';
+						lis = lis + ' <img class="pure-img" style="max-width:48px" src="'+img.path+'">';
+						lis = lis + ' <input style="width: 28px; height: 16px; position: absolute; vertical-align: middle; margin-top: 16px; margin-left: -38px; border: 0px none; background: transparent none repeat scroll 0% 0%; font: bold 9px Arial; text-align: center; color: rgb(7, 136, 165); padding: 0px;" readonly="readonly" value="0" data-width="48" data-height="48" data-fgcolor="#0788a5" data-readonly="1" data-bgcolor="#3e4043" type="text">';
+						lis = lis + ' </div> <p>'+img.path+'<i>0 KB</i></p> <span></span> </li> ';
+						
+						$("#fileslist").append(lis);
+					}
+					
 				});
 				
 				function clearFields() {
@@ -141,6 +157,13 @@
 					
 					$("#file").val("");
 					$("#f_id").val("");
+					
+					var d = new Date();
+					var n = d.getTime(); 
+					var elem  = document.getElementById("file");
+					var elem1 = document.getElementById("f_id");
+					elem.value = n;
+					elem1.value = n;
 				}
 				
 				$('#btn_d').click(function() {
@@ -158,18 +181,11 @@
 					xhttp.send(null);
 				});
 				
+				clearFields();
+				
 			});
 		</script>
 		
-		<script type="text/javascript">
-			var d = new Date();
-			var n = d.getTime(); 
-			
-			var elem  = document.getElementById("file");
-			var elem1 = document.getElementById("f_id");
-			elem.value = n;
-			elem1.value = n;
-		</script>
 		
 		<!-- JavaScript Includes -->
 		<script src="assets/f_up/js/jquery.knob.js"></script>
