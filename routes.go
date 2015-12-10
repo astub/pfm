@@ -35,7 +35,7 @@ func NewRouter(db DataHandler) *mux.Router {
 		Route{"EventNews", "GET", "/eventnews", EventNewsPage},
 		Route{"Media", "GET", "/media", MediaPage},
 		Route{"ExhibitsPage", "GET", "/exhibits", ExhibitsPage},
-		Route{"Resources", "GET", "/resources", Resources},
+		Route{"Resources", "GET", "/resourcesqq", Resources},
 		Route{"InfoPage", "GET", "/info", InfoPage},
 
 		Route{"GetPosts", "GET", "/get_posts", fe.GetPosts},
@@ -199,8 +199,8 @@ func (fe FrontEnd) UpdatePost(w http.ResponseWriter, r *http.Request) {
 		Links:   r.Form.Get("links"),
 		File:    r.Form.Get("file"),
 	}
-
-	log.Println(pst)
+	log.Println("Updating:")
+	log.Println(pst.File)
 
 	err = fe.DataHandler.UpdatePost(pst)
 	if err != nil {
@@ -238,7 +238,8 @@ func (fe FrontEnd) NewPost(w http.ResponseWriter, r *http.Request) {
 		File:    r.Form.Get("file"),
 	}
 
-	log.Println(pst)
+	log.Println("New insert")
+	log.Println(pst.File)
 
 	err = fe.DataHandler.InsertPost(pst)
 	if err != nil {

@@ -16,5 +16,5 @@ func main() {
 
 	router := NewRouter(db)
 
-	http.ListenAndServe(":7011", router)
+	http.ListenAndServe(":80", router)
 }
